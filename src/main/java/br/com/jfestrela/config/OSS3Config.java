@@ -11,21 +11,21 @@ public class OSS3Config implements Serializable{
 
 	private static final long serialVersionUID = -3247797927016190848L;
 	
-	@ConfigProperty(name = "poc.s3.iam.endpopint")
+	@ConfigProperty(name = "os.s3.iam.endpopint")
 	private String iamEndPoint ;
-	@ConfigProperty(name = "poc.s3.bucket.name")
+	@ConfigProperty(name = "os.s3.bucket.name")
     private String bucketName ;  // eg my-unique-bucket-name
-	@ConfigProperty(name = "poc.s3.bucket.new.name")
+	@ConfigProperty(name = "os.s3.bucket.new.name")
     private String newBucketName ; // eg my-other-unique-bucket-name
-	@ConfigProperty(name = "poc.s3.api.key")
+	@ConfigProperty(name = "os.s3.api.key")
     private String api_key ; // eg "W00YiRnLW4a3fTjMB-oiB-2ySfTrFBIQQWanc--P3byk"
-	@ConfigProperty(name = "poc.s3.service.instance.id")
+	@ConfigProperty(name = "os.s3.service.instance.id")
     private String service_instance_id ; // eg "crn:v1:bluemix:public:cloud-object-storage:global:a/3bf0d9003abfb5d29761c3e97696b71c:d6f04d83-6c4f-4a62-a165-696756d63903::"
-	@ConfigProperty(name = "poc.s3.endpoint.url")
+	@ConfigProperty(name = "os.s3.endpoint.url")
     private String endpoint_url ; // this could be any service endpoint
-	@ConfigProperty(name = "poc.s3.storage.class")
+	@ConfigProperty(name = "os.s3.storage.class")
     private String storageClass ;
-	@ConfigProperty(name = "poc.s3.location")
+	@ConfigProperty(name = "os.s3.location")
     private String location ;
 	
 	public String getIamEndPoint() {
