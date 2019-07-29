@@ -66,8 +66,8 @@ public class Oss3ClientApiResource {
     @Path("/bucket/object-file")
     @RolesAllowed("ADM")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response  createObject (@Form FileS3DTO fileText) throws OSS3Exception {
-        return Response.ok(service.putTextFile(fileText) ).build();
+    public Response  createObject (@Form FileS3DTO fileS3) throws OSS3Exception {
+        return Response.ok(service.putFile(fileS3) ).build();
     }
     
 
