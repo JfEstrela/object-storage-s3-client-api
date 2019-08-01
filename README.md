@@ -51,8 +51,7 @@
 
 ##### Após esses passos você obterá um json no formato abaixo.
 
-```json
-{
+```json{
   "apikey": "sua-api-key",
   "endpoints": "https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints",
   "iam_apikey_description": "Auto-generated for key ashjcsjkcjkch",
@@ -68,7 +67,7 @@
 * Para obter os endPoints de acesso da API da IBM accesse o link do campo `endpoints` do json acima.
 * Esse link retornarar um json no formato abaixo.
 
-> ```json
+```json
 {  
    "identity-endpoints":{  
       "iam-token":"iam.cloud.ibm.com",
@@ -126,19 +125,19 @@
    }
 }
 ```
-OBS: Esse Json não esta completo é só um exemplo.
+> OBS: Esse Json não esta completo é só um exemplo.
 
 * Observe que existe algums sub-objetos nesse json, vamos entender o que eles são.
 
-> ```json
+```json
 "cross-region":{ }
 ``` 
-Esse cara é a Região.
+> Esse cara é a Região.
 
-> ```json
+```json
  "us":{ }
 ```
-Esse cara é o local.
+> Esse cara é o local.
 
 * Dentro do local exitem endpoints publicos e privados, Qual usar?
 
