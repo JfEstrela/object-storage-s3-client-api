@@ -38,12 +38,23 @@ public class Oss3ClientApiResource {
 	}
 
 	@GET
-	@Path("/bucket/object/{bucketName}/{objectName}")
+	@Path("/bucket/file/{bucketName}/{objectName}")
 	@RolesAllowed("ADM")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getObjectList(@PathParam("bucketName") String bucketName,
+	public Response getFile(@PathParam("bucketName") String bucketName,
 			@PathParam("objectName") String objectName) throws OSS3Exception {
-		return Response.ok(service.getObjectOutputStream(bucketName, objectName)).build();
+		return Response.ok(service.getFile(bucketName, objectName)).build();
+	}
+	
+	@GET
+	@Path("/bucket/download/{bucketName}/{objectName}")
+	@RolesAllowed("ADM")
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public Response download(@PathParam("bucketName") String bucketName,@PathParam("objectName") String objectName) throws OSS3Exception {
+		File file = writeFile(service.getObjectOutputStream(bucketName, objectName).toByteArray(), objectName);
+		return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
+				      .header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"" )
+				      .build();		
 	}
 
 	@POST
@@ -63,12 +74,21 @@ public class Oss3ClientApiResource {
 	}
 
 	@POST
-    @Path("/bucket/object-file")
+    @Path("/bucket/object-file/{bucketName}")
     @RolesAllowed("ADM")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response  createObject (@Form FileS3DTO fileS3) throws OSS3Exception {
-        return Response.ok(service.putFile(fileS3) ).build();
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response  createObject (@PathParam("bucketName") String bucketName , @MultipartForm FileS3 fileS3  ) throws OSS3Exception {
+		return Response.ok(service.putFile(loadFile(bucketName, fileS3)) ).build();
     }
+
+	private FileS3DTO loadFile(String bucketName, FileS3 fileS3) throws OSS3Exception {
+		FileS3DTO fileDTO = new FileS3DTO();
+		fileDTO.setBucketName(bucketName);
+		fileDTO.setItemName(fileS3.getName());
+		fileDTO.setFile(writeFile(fileS3.getData(), fileDTO.getItemName()));	
+		return fileDTO;
+	}
     
 
 }
