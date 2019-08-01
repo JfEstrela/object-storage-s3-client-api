@@ -1,7 +1,12 @@
 package br.com.jfestrela.endpoint;
 
+import static br.com.confesol.util.FileUtil.writeFile;
+
+import java.io.File;
+
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
