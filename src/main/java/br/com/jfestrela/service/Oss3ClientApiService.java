@@ -91,10 +91,8 @@ private static final Logger LOG = LoggerFactory.getLogger(Oss3ClientApiService.c
      */
     public  ObjectListing listObjects(String bucketName) throws OSS3Exception{	
     	ObjectListing objectListing = null;
-    	try {
-    		
-    		objectListing = this.createClient().listObjects(new ListObjectsRequest().withBucketName(bucketName));
-    		
+    	try {  		
+    		objectListing = this.createClient().listObjects(new ListObjectsRequest().withBucketName(bucketName));   		
     		for(S3ObjectSummary objectSummary : objectListing.getObjectSummaries()) {
                 System.out.printf("Item: %s (%s bytes)\n", objectSummary.getKey(), objectSummary.getSize());
             }
@@ -112,25 +110,42 @@ private static final Logger LOG = LoggerFactory.getLogger(Oss3ClientApiService.c
      * @return
      * @throws OSS3Exception
      */
-    public FileOutputStream getObjectOutputStream(String bucketName,String objectName) throws OSS3Exception {
-    	FileOutputStream fos = null;
+    public ByteArrayOutputStream getObjectOutputStream(String bucketName,String objectName) throws OSS3Exception {
+
+    	ByteArrayOutputStream output = new ByteArrayOutputStream(1024);
     	try {
 	    	S3Object obj = this.createClient().getObject(bucketName, objectName);
 	        S3ObjectInputStream s3is = obj.getObjectContent();
-		
-			fos = new FileOutputStream(new File(objectName));
-		
+
 	        byte[] read_buf = new byte[1024];
 	        int read_len = 0;
 	        while ((read_len = s3is.read(read_buf)) > 0) {
-	            fos.write(read_buf, 0, read_len);
+	        	output.write(read_buf, 0, read_len);
 	        }
 	        s3is.close();
-	        fos.close();
+	        output.close();
 		} catch (IOException e) {
-			throwOSS3Exception("Erro in getObject", e);
+			throwOSS3Exception("Erro in getObjectOutputStream", e);
 		}
-    	return fos;
+    	return output;
+	    
+    }
+    
+    /**
+     * 
+     * @param bucketName
+     * @param objectName
+     * @return
+     * @throws OSS3Exception
+     */
+    public FileS3 getFile(String bucketName,String objectName) throws OSS3Exception {
+    	FileS3 fileS3 = null;
+    	try {
+	    	fileS3 = new FileS3(this.getObjectOutputStream(bucketName, objectName).toByteArray(), objectName);
+		} catch (Exception e) {
+			throwOSS3Exception("Erro in getFile", e);
+		}
+    	return fileS3;
 	    
     }
  
@@ -292,7 +307,7 @@ private static final Logger LOG = LoggerFactory.getLogger(Oss3ClientApiService.c
      * @return
      * @throws OSS3Exception 
      */
-    public ObjectMetadata downloadFile(String bucketName,String fileName) throws OSS3Exception {
+    public ObjectMetadata getMetadataFile(String bucketName,String fileName) throws OSS3Exception {
     	GetObjectRequest request = new GetObjectRequest( bucketName,fileName);
     	ObjectMetadata objectMetadata = null;
     	try {
@@ -302,23 +317,7 @@ private static final Logger LOG = LoggerFactory.getLogger(Oss3ClientApiService.c
 		}
     	return objectMetadata;
     }
-    /**
-     * 
-     * @param bucketName
-     * @param objectName
-     * @return
-     * @throws OSS3Exception
-     */
-    public S3ObjectInputStream  objectStreem(String bucketName,String objectName) throws OSS3Exception {
-    	S3ObjectInputStream s3ObjectInputStream = null;
-    	try {
-    		S3Object s3PbjectResponse = createClient().getObject( bucketName, objectName );
-    		s3ObjectInputStream = s3PbjectResponse.getObjectContent();
-		} catch (Exception e) {
-			throwOSS3Exception("Erro in objectStreem", e);
-		}
-    	return s3ObjectInputStream;
-    }
+  
     
     /**
      * 
