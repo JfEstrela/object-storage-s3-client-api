@@ -1,6 +1,6 @@
 package br.com.jfestrela.endpoint;
 
-import static br.com.confesol.util.FileUtil.writeFile;
+import static br.com.jfestrela.FileUtil.writeFile;
 
 import java.io.File;
 
