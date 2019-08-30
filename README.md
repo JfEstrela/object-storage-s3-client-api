@@ -57,8 +57,8 @@
   "iam_apikey_description": "Auto-generated for key ashjcsjkcjkch",
   "iam_apikey_name": "Nome do seu serviço",
   "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Writer",
-  "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::gdfsgdfgsd4543::serviceid:ServiceId-hgrgfdfd-c7c8-4c19-4terggegs",
-  "resource_instance_id": "crn:v1:bluemix:public:cloud-object-storage:global:a/rgsdg4t434354:fdsfds-6dae-471b-8e60-fgrewt534t::"
+  "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::gdfsgdfgsd4543::serviceid:ServiceId-hgrgfdfd-esfsf-fxgf-4terggegs",
+  "resource_instance_id": "crn:v1:bluemix:public:cloud-object-storage:global:a/rgsdg4t434x354:fdsfds-6dae-xvfv-xvf-fgrewt534t::"
 }
 
 ```
